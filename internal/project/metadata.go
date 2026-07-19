@@ -1,7 +1,7 @@
 package project
 
 type Metadata struct {
-	Name        string
-	Version     string
-	Description string
+	Name        string `toml:"name"`
+	Version     string `toml:"version"`
+	Description string `toml:"description"`
 }

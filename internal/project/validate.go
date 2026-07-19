@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 )
 
+
 func Validate(path string) error {
 	required := []string{
 		"verso.toml",
@@ -19,6 +20,10 @@ func Validate(path string) error {
 		if _, err := os.Stat(filepath.Join(path, item)); err != nil {
 			return fmt.Errorf("missing %s", item)
 		}
+	}
+
+	if _, err := Load(path); err != nil {
+		return err
 	}
 
 	return nil
