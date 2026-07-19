@@ -3,11 +3,28 @@ package cli
 import "fmt"
 
 func Run(args []string) int {
-	switch {
-	case len(args) >= 2 && args[1] == "version":
-		return runVersion()
-	default:
+	if len(args) < 2 {
 		fmt.Println("Verso CLI")
 		return 0
+	}
+
+	switch args[1] {
+
+	case "version":
+		return runVersion()
+
+	case "init":
+		cmd := InitCommand{}
+
+		if err := cmd.Run(args[2:]); err != nil {
+			fmt.Println("Error:", err)
+			return 1
+		}
+
+		return 0
+
+	default:
+		fmt.Println("Unknown command:", args[1])
+		return 1
 	}
 }
