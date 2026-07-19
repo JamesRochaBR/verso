@@ -15,9 +15,10 @@ Implementation always comes after specification.
 | RFC | Status | Description |
 |------|--------|-------------|
 | RFC-0000 | Draft | RFC Process |
-| RFC-0001 | Draft | Skill Specification |
-| RFC-0002 | Draft | Memory Specification |
-| RFC-0003 | Draft | Workflow Specification |
-| RFC-0004 | Draft | Router Specification |
-| RFC-0005 | Draft | Template Specification |
-| RFC-0006 | Draft | Agent Specification |
+| RFC-0001 | Draft | Component Model |
+| RFC-0002 | Draft | Skill Specification |
+| RFC-0003 | Draft | Memory Specification |
+| RFC-0004 | Draft | Workflow Specification |
+| RFC-0005 | Draft | Router Specification |
+| RFC-0006 | Draft | Template Specification |
+| RFC-0007 | Draft | Agent Specification |
