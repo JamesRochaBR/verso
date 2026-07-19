@@ -33,13 +33,13 @@ func Discover(path string) ([]Component, error) {
 
 			content, err := os.ReadFile(filepath.Join(dir, entry.Name()))
 			if err != nil {
-					return nil, err
+				return nil, err
 			}
 
 			components = append(components, Component{
-				Name: name,
-				Type: componentType,
-				Path: filepath.Join(folder, entry.Name()),
+				Name:    name,
+				Type:    componentType,
+				Path:    filepath.Join(folder, entry.Name()),
 				Content: string(content),
 			})
 		}

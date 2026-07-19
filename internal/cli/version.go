@@ -4,7 +4,13 @@ import "fmt"
 
 const Version = "0.2.0-dev"
 
-func runVersion() int {
+type VersionCommand struct{}
+
+func (VersionCommand) Name() string {
+	return "version"
+}
+
+func (VersionCommand) Run(args []string) error {
 	fmt.Printf("Verso %s\n", Version)
-	return 0
+	return nil
 }

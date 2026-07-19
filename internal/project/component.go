@@ -10,8 +10,8 @@ const (
 )
 
 type Component struct {
-	Name string
-	Type ComponentType
-	Path string
+	Name    string
+	Type    ComponentType
+	Path    string
 	Content string
 }

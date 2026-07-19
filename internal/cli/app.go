@@ -18,11 +18,6 @@ func Run(args []string) int {
 		}
 	}
 
-	switch args[1] {
-		case "version":
-			return runVersion()
-		default:
-			fmt.Println("Unknown command:", args[1])
-			return 1
-	}
+	fmt.Println("Unknown command:", args[1])
+	return 1
 }
