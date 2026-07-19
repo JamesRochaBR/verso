@@ -19,7 +19,7 @@ func printComponents(title string, components []project.Component, componentType
 
 	for _, c := range components {
 		if c.Type == componentType {
-			fmt.Printf("- %s\n", c.Name)
+			fmt.Printf("- %s (%d bytes)\n", c.Name, len(c.Content))
 		}
 	}
 
