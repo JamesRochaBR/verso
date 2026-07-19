@@ -8,6 +8,7 @@ type Command interface {
 var commands = []Command{
 	VersionCommand{},
 	InitCommand{},
+	ListCommand{},
 	ValidateCommand{},
 	InspectCommand{},
 	BuildCommand{},
