@@ -39,11 +39,39 @@ func TestPrompt(t *testing.T) {
 	}
 }
 
-// func TestPromptRendererName(t *testing.T) {
+func TestPromptWithFilteredProject(t *testing.T) {
+	p := &project.Project{
+		Metadata: project.Metadata{
+			Name:    "demo",
+			Version: "1.0.0",
+		},
+		Components: []project.Component{
+			{
+				Name:    "reviewer",
+				Title:   "Reviewer",
+				Type:    project.ComponentSkill,
+				Content: "Review code",
+			},
+			{
+				Name:    "architect",
+				Title:   "Architect",
+				Type:    project.ComponentSkill,
+				Content: "Architecture",
+			},
+		},
+	}
 
-// 	r := PromptRenderer{}
+	filtered := project.ApplyFilter(p, project.Filter{
+		Names: []string{"reviewer"},
+	})
 
-// 	if r.Name() != "prompt" {
-// 		t.Fatalf("unexpected renderer name")
-// 	}
-// }
+	out := Prompt(filtered)
+
+	if strings.Contains(out, "Architect") {
+		t.Fatal("unexpected component rendered")
+	}
+
+	if !strings.Contains(out, "Reviewer") {
+		t.Fatal("expected component not rendered")
+	}
+}
