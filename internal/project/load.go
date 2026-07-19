@@ -19,7 +19,13 @@ func Load(path string) (*Project, error) {
 		return nil, err
 	}
 
+	components, err := Discover(path)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Project{
-		Metadata: metadata,
+		Metadata:   metadata,
+		Components: components,
 	}, nil
 }

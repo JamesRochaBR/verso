@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 )
 
-
 func Validate(path string) error {
 	required := []string{
 		"verso.toml",
@@ -22,9 +21,12 @@ func Validate(path string) error {
 		}
 	}
 
-	if _, err := Load(path); err != nil {
+	project, err := Load(path)
+	if err != nil {
 		return err
 	}
+
+	_ = project
 
 	return nil
 }
