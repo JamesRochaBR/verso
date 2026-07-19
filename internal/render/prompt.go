@@ -6,7 +6,9 @@ import (
 	"github.com/james-rocha/verso/internal/project"
 )
 
-func Prompt(p *project.Project) string {
+type MarkdownRenderer struct{}
+
+func (MarkdownRenderer) Render(p *project.Project) (string, error) {
 	var b strings.Builder
 
 	b.WriteString("# Project\n\n")
@@ -24,7 +26,7 @@ func Prompt(p *project.Project) string {
 	writeSection(&b, "Workflows", p.Components, project.ComponentWorkflow)
 	writeSection(&b, "Templates", p.Components, project.ComponentTemplate)
 
-	return b.String()
+	return b.String(), nil
 }
 
 func writeSection(
@@ -53,4 +55,26 @@ func writeSection(
 		b.WriteString(c.Content)
 		b.WriteString("\n\n")
 	}
+}
+
+func (MarkdownRenderer) Name() string {
+	return "markdown"
+}
+
+func Prompt(p *project.Project) string {
+	r, ok := Get("markdown")
+	if !ok {
+		panic("markdown renderer not registered")
+	}
+
+	out, err := r.Render(p)
+	if err != nil {
+		panic(err)
+	}
+
+	return out
+}
+
+func init() {
+	Register(MarkdownRenderer{})
 }
