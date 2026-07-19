@@ -38,6 +38,7 @@ func Discover(path string) ([]Component, error) {
 
 			components = append(components, Component{
 				Name:    name,
+				Title:   ExtractTitle(string(content)),
 				Type:    componentType,
 				Path:    filepath.Join(folder, entry.Name()),
 				Content: string(content),

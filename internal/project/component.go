@@ -11,6 +11,7 @@ const (
 
 type Component struct {
 	Name    string
+	Title string
 	Type    ComponentType
 	Path    string
 	Content string
