@@ -1,22 +1,23 @@
 # Verso
 
-Less Context. Better Reasoning.
+> Less Context. Better Reasoning.
 
-Verso is an open-source framework that helps AI coding agents
-load only the context they need.
+Every AI coding agent suffers from the same problem.
 
-Instead of monolithic prompts,
-Verso organizes knowledge into
-small modular skills,
-workflows,
-memory,
-and intelligent routing.
+Too much context.
 
-Compatible with:
+Too many instructions.
 
-• GitHub Copilot Agent
-• Cursor
-• Continue
-• Cline
-• Roo Code
-• Claude Code
+Too many responsibilities.
+
+Verso solves this by composing knowledge into small,
+independent modules that are loaded only when needed.
+
+
+## Dogfooding
+
+Verso follows a simple rule:
+
+Every new version of Verso must be built using the capabilities of the previous version.
+
+The framework evolves by using itself.

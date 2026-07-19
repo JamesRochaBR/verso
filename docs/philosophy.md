@@ -1,23 +1,38 @@
-Principle 01
+The Context Principle
 
 Context is expensive.
 
-Principle 02
+Load only what is necessary.
 
-Load only what is needed.
+Unload everything else.
 
-Principle 03
+The Router Principle
 
-Skills must be independent.
+Knowledge should never be loaded
+without a reason.
 
-Principle 04
+The Router decides.
 
-Every workflow is composable.
+The Skill Principle
 
-Principle 05
+A skill should do one thing.
 
-Never duplicate knowledge.
+And do it well.
 
-Principle 06
+The Memory Principle
 
-Prefer many small files over one huge prompt.
+Memory stores knowledge.
+
+Memory never performs actions.
+
+The Workflow Principle
+
+A workflow orchestrates.
+
+It never contains business knowledge.
+
+The Workflow Principle
+
+A workflow orchestrates.
+
+It never contains business knowledge.
