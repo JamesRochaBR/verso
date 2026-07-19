@@ -18,10 +18,21 @@ func (PromptCommand) Run(args []string) error {
 	if len(args) == 0 {
 		return fmt.Errorf("missing project path")
 	}
+	if args[0] == "--help" || args[0] == "-h" {
+		printPromptHelp()
+		return nil
+	}
 
 	p, err := project.Load(args[0])
 	if err != nil {
 		return err
+	}
+
+	for _, arg := range args[1:] {
+		if arg == "--help" || arg == "-h" {
+			printPromptHelp()
+			return nil
+		}
 	}
 
 	opts, err := ParsePromptOptions(args[1:])
@@ -39,4 +50,15 @@ func (PromptCommand) Run(args []string) error {
 
 	fmt.Print(out)
 	return nil
+}
+
+func printPromptHelp() {
+	fmt.Println(`Usage:
+  verso prompt <project> [options]
+
+Options:
+  --name <list>      Include only components by name
+  --exclude <list>   Exclude component types
+  --output <file>    Write prompt to file
+  --help             Show this help`)
 }
