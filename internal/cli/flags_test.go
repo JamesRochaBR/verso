@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"github.com/james-rocha/verso/internal/project"
 	"reflect"
 	"testing"
 )
@@ -60,5 +61,38 @@ func TestParseFilter(t *testing.T) {
 
 	if filter.Names[1] != "architect" {
 		t.Fatal("unexpected second name")
+	}
+}
+
+func TestParseComponentTypes(t *testing.T) {
+
+	got := parseComponentTypes("memory,template")
+
+	if len(got) != 2 {
+		t.Fatal("expected two component types")
+	}
+
+	if got[0] != project.ComponentMemory {
+		t.Fatal("unexpected first type")
+	}
+
+	if got[1] != project.ComponentTemplate {
+		t.Fatal("unexpected second type")
+	}
+}
+
+func TestParseFilterExclude(t *testing.T) {
+
+	filter := ParseFilter([]string{
+		"--exclude",
+		"memory",
+	})
+
+	if len(filter.Exclude) != 1 {
+		t.Fatal("expected one excluded type")
+	}
+
+	if filter.Exclude[0] != project.ComponentMemory {
+		t.Fatal("unexpected excluded type")
 	}
 }

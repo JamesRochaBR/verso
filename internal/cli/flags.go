@@ -19,6 +19,12 @@ func ParseFilter(args []string) project.Filter {
 				i++
 			}
 
+		case "--exclude":
+			if i+1 < len(args) {
+				filter.Exclude = parseComponentTypes(args[i+1])
+				i++
+			}
+
 		}
 	}
 
@@ -43,6 +49,35 @@ func splitCSV(value string) []string {
 		}
 
 		result = append(result, p)
+	}
+
+	if len(result) == 0 {
+		return nil
+	}
+
+	return result
+}
+
+func parseComponentTypes(value string) []project.ComponentType {
+	names := splitCSV(value)
+
+	result := make([]project.ComponentType, 0, len(names))
+
+	for _, name := range names {
+		switch name {
+
+		case "skill":
+			result = append(result, project.ComponentSkill)
+
+		case "memory":
+			result = append(result, project.ComponentMemory)
+
+		case "workflow":
+			result = append(result, project.ComponentWorkflow)
+
+		case "template":
+			result = append(result, project.ComponentTemplate)
+		}
 	}
 
 	if len(result) == 0 {
