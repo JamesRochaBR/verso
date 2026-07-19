@@ -11,4 +11,5 @@ var commands = []Command{
 	ValidateCommand{},
 	InspectCommand{},
 	BuildCommand{},
+	PromptCommand{},
 }
