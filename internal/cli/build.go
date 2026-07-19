@@ -1,6 +1,10 @@
 package cli
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/james-rocha/verso/internal/build"
+)
 
 type BuildCommand struct{}
 
@@ -9,6 +13,10 @@ func (BuildCommand) Name() string {
 }
 
 func (BuildCommand) Run(args []string) error {
-	fmt.Println("build not implemented")
-	return nil
+
+	if len(args) == 0 {
+		return fmt.Errorf("missing project path")
+	}
+
+	return build.Build(args[0])
 }

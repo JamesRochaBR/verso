@@ -16,7 +16,6 @@ func (InspectCommand) Name() string {
 
 func (InspectCommand) Run(args []string) error {
 
-
 	if len(args) < 1 {
 		return fmt.Errorf("missing project path")
 	}

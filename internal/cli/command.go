@@ -10,4 +10,5 @@ var commands = []Command{
 	InitCommand{},
 	ValidateCommand{},
 	InspectCommand{},
+	BuildCommand{},
 }
