@@ -24,7 +24,10 @@ func TestPrompt(t *testing.T) {
 		},
 	}
 
-	out := Prompt(p)
+	out, err := Prompt(p)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
 
 	if !strings.Contains(out, "# Project") {
 		t.Fatal("missing project section")
@@ -65,7 +68,10 @@ func TestPromptWithFilteredProject(t *testing.T) {
 		Names: []string{"reviewer"},
 	})
 
-	out := Prompt(filtered)
+	out, err := Prompt(filtered)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
 
 	if strings.Contains(out, "Architect") {
 		t.Fatal("unexpected component rendered")

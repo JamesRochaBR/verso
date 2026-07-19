@@ -1,6 +1,7 @@
 package render
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/james-rocha/verso/internal/project"
@@ -61,18 +62,18 @@ func (MarkdownRenderer) Name() string {
 	return "markdown"
 }
 
-func Prompt(p *project.Project) string {
+func Prompt(p *project.Project) (string, error) {
 	r, ok := Get("markdown")
 	if !ok {
-		panic("markdown renderer not registered")
+		return "", fmt.Errorf("markdown renderer not registered")
 	}
 
 	out, err := r.Render(p)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
-	return out
+	return out, nil
 }
 
 func init() {

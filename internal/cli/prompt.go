@@ -42,7 +42,10 @@ func (PromptCommand) Run(args []string) error {
 
 	p = project.ApplyFilter(p, opts.Filter)
 
-	out := render.Prompt(p)
+	out, err := render.Prompt(p)
+	if err != nil {
+		return err
+	}
 
 	if opts.Output != "" {
 		return os.WriteFile(opts.Output, []byte(out), 0644)
