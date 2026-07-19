@@ -33,6 +33,16 @@ func Run(args []string) int {
 
 		return 0
 
+	case "inspect":
+		cmd := InspectCommand{}
+
+		if err := cmd.Run(args[2:]); err != nil {
+			fmt.Println("Error:", err)
+			return 1
+		}
+
+		return 0
+
 	default:
 		fmt.Println("Unknown command:", args[1])
 		return 1
