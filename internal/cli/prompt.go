@@ -24,15 +24,7 @@ func (PromptCommand) Run(args []string) error {
 		return err
 	}
 
-	var filter project.Filter
-
-	for i := 1; i < len(args); i++ {
-
-		if args[i] == "--name" && i+1 < len(args) {
-			filter.Names = splitCSV(args[i+1])
-			i++
-		}
-	}
+	filter := ParseFilter(args[1:])
 
 	p = project.ApplyFilter(p, filter)
 

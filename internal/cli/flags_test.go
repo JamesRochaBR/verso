@@ -42,3 +42,23 @@ func TestSplitCSVEmpty(t *testing.T) {
 		t.Fatal("expected nil")
 	}
 }
+
+func TestParseFilter(t *testing.T) {
+
+	filter := ParseFilter([]string{
+		"--name",
+		"reviewer,architect",
+	})
+
+	if len(filter.Names) != 2 {
+		t.Fatal("expected two names")
+	}
+
+	if filter.Names[0] != "reviewer" {
+		t.Fatal("unexpected first name")
+	}
+
+	if filter.Names[1] != "architect" {
+		t.Fatal("unexpected second name")
+	}
+}
