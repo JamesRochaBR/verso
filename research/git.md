@@ -1,28 +1,31 @@
 # Git
 
-## The problem it solves
+## Problem
 
-Git solves distributed version control by allowing developers to track changes, collaborate safely, work offline, and maintain a complete history of a project's evolution.
+What problem was Git originally created to solve?
 
-## Primary artifact
+## Core Model
 
-- `.git/` directory
-- Commit graph
-- Git repository
+What is the smallest immutable concept in Git?
 
-The primary artifact is the repository itself, which represents the complete history and state of a project.
+## Repository Model
 
-## What we can learn
+How is a repository organized?
 
-- Distributed architecture without central dependency.
-- Immutable history built from simple primitives.
-- Small and composable commands.
-- Everything is based on well-defined objects.
-- Clear separation between repository format and user tooling.
+## Separation of Concerns
 
-## What we should NOT copy
+What responsibilities belong to Git itself?
 
-- Complex command set with a steep learning curve.
-- Inconsistent naming accumulated over decades.
-- Internal implementation details exposed to end users.
-- Features optimized for historical compatibility instead of simplicity.
+What responsibilities belong to external tools?
+
+## Extensibility
+
+How did Git evolve without constantly breaking compatibility?
+
+## Lessons for Verso
+
+List the architectural principles that should influence Verso.
+
+## Things Verso Should Avoid
+
+List the architectural decisions that do not fit Verso.
