@@ -8,43 +8,21 @@ func Run(args []string) int {
 		return 0
 	}
 
+	for _, command := range commands {
+		if command.Name() == args[1] {
+			if err := command.Run(args[2:]); err != nil {
+				fmt.Println("Error:", err)
+				return 1
+			}
+			return 0
+		}
+	}
+
 	switch args[1] {
-
-	case "version":
-		return runVersion()
-
-	case "init":
-		cmd := InitCommand{}
-
-		if err := cmd.Run(args[2:]); err != nil {
-			fmt.Println("Error:", err)
+		case "version":
+			return runVersion()
+		default:
+			fmt.Println("Unknown command:", args[1])
 			return 1
-		}
-
-		return 0
-
-	case "validate":
-		cmd := ValidateCommand{}
-
-		if err := cmd.Run(args[2:]); err != nil {
-			fmt.Println("Error:", err)
-			return 1
-		}
-
-		return 0
-
-	case "inspect":
-		cmd := InspectCommand{}
-
-		if err := cmd.Run(args[2:]); err != nil {
-			fmt.Println("Error:", err)
-			return 1
-		}
-
-		return 0
-
-	default:
-		fmt.Println("Unknown command:", args[1])
-		return 1
 	}
 }
