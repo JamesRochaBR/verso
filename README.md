@@ -2,22 +2,108 @@
 
 > Less Context. Better Reasoning.
 
-Every AI coding agent suffers from the same problem.
+Verso is an open-source framework that helps AI coding agents load only the context they actually need.
 
-Too much context.
+Instead of relying on monolithic prompts, Verso organizes knowledge into modular skills, workflows, memory and intelligent context routing.
 
-Too many instructions.
+The goal is simple:
 
-Too many responsibilities.
+> Load less. Reason better.
 
-Verso solves this by composing knowledge into small,
-independent modules that are loaded only when needed.
+---
 
+## Why Verso?
+
+Modern AI coding agents are incredibly capable.
+
+However, they all suffer from the same problem:
+
+- Too much context.
+- Too many instructions.
+- Too many responsibilities.
+
+Large prompts become difficult to maintain, expensive to process and easy to break.
+
+Verso solves this problem by decomposing knowledge into small reusable modules that can be loaded only when necessary.
+
+---
+
+## Core Principles
+
+Verso is built around a few fundamental ideas.
+
+- Context is expensive.
+- Load only what is necessary.
+- Small modules are better than monolithic prompts.
+- Every Skill has a single responsibility.
+- Workflows orchestrate Skills.
+- Memory stores knowledge.
+- Templates generate artifacts.
+- Routing decides what should be loaded.
+
+---
+
+## Architecture
+
+```
+User
+    │
+    ▼
+Coding Agent
+    │
+    ▼
+Verso Router
+    │
+    ├── Skills
+    ├── Memory
+    ├── Templates
+    └── Workflows
+    │
+    ▼
+Response
+```
+
+---
+
+## Compatibility
+
+Verso is designed to work with any modern coding agent.
+
+Current targets include:
+
+- GitHub Copilot Agent
+- Cursor
+- Continue
+- Cline
+- Roo Code
+- Claude Code
+
+The framework itself remains agent-agnostic.
+
+---
 
 ## Dogfooding
 
-Verso follows a simple rule:
+Verso follows one simple rule:
 
-Every new version of Verso must be built using the capabilities of the previous version.
+Every new version of Verso must be built using the capabilities provided by the previous version.
 
 The framework evolves by using itself.
+
+---
+
+## Roadmap
+
+Current milestone:
+
+**v0.1 — Foundation**
+
+Next milestone:
+
+**v0.2 — Specifications**
+
+---
+
+## License
+
+MIT License.
