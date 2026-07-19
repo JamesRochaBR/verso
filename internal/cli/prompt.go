@@ -2,9 +2,9 @@ package cli
 
 import (
 	"fmt"
-
 	"github.com/james-rocha/verso/internal/project"
 	"github.com/james-rocha/verso/internal/render"
+	"os"
 )
 
 type PromptCommand struct{}
@@ -24,11 +24,16 @@ func (PromptCommand) Run(args []string) error {
 		return err
 	}
 
-	filter := ParseFilter(args[1:])
+	opts := ParsePromptOptions(args[1:])
 
-	p = project.ApplyFilter(p, filter)
+	p = project.ApplyFilter(p, opts.Filter)
 
-	fmt.Print(render.Prompt(p))
+	out := render.Prompt(p)
 
+	if opts.Output != "" {
+		return os.WriteFile(opts.Output, []byte(out), 0644)
+	}
+
+	fmt.Print(out)
 	return nil
 }

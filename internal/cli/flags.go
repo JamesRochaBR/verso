@@ -6,8 +6,13 @@ import (
 	"github.com/james-rocha/verso/internal/project"
 )
 
-func ParseFilter(args []string) project.Filter {
-	var filter project.Filter
+type PromptOptions struct {
+	Filter project.Filter
+	Output string
+}
+
+func ParsePromptOptions(args []string) PromptOptions {
+	var opts PromptOptions
 
 	for i := 0; i < len(args); i++ {
 
@@ -15,20 +20,26 @@ func ParseFilter(args []string) project.Filter {
 
 		case "--name":
 			if i+1 < len(args) {
-				filter.Names = splitCSV(args[i+1])
+				opts.Filter.Names = splitCSV(args[i+1])
 				i++
 			}
 
 		case "--exclude":
 			if i+1 < len(args) {
-				filter.Exclude = parseComponentTypes(args[i+1])
+				opts.Filter.Exclude = parseComponentTypes(args[i+1])
+				i++
+			}
+
+		case "--output":
+			if i+1 < len(args) {
+				opts.Output = args[i+1]
 				i++
 			}
 
 		}
 	}
 
-	return filter
+	return opts
 }
 
 func splitCSV(value string) []string {
