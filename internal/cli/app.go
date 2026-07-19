@@ -1,19 +1,13 @@
 package cli
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func Run(args []string) int {
-	fmt.Println("Verso CLI")
-
-	commands := []Command{
-		InitCommand{},
-		ValidateCommand{},
-		BuildCommand{},
+	switch {
+	case len(args) >= 2 && args[1] == "version":
+		return runVersion()
+	default:
+		fmt.Println("Verso CLI")
+		return 0
 	}
-
-	_ = commands
-
-	return 0
 }
