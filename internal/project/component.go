@@ -10,9 +10,9 @@ const (
 )
 
 type Component struct {
-	Name    string
-	Title string
-	Type    ComponentType
-	Path    string
-	Content string
+	Name    string        `json:"name"`
+	Title   string        `json:"title"`
+	Type    ComponentType `json:"type"`
+	Path    string        `json:"path"`
+	Content string        `json:"content,omitempty"`
 }
