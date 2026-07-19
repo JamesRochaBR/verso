@@ -4,7 +4,13 @@ import "fmt"
 
 func Run(args []string) int {
 	if len(args) < 2 {
-		fmt.Println("Verso CLI")
+		printHelp()
+		return 0
+	}
+
+	switch args[1] {
+	case "--help", "-h", "help":
+		printHelp()
 		return 0
 	}
 
@@ -19,5 +25,8 @@ func Run(args []string) int {
 	}
 
 	fmt.Println("Unknown command:", args[1])
+	fmt.Println()
+	printHelp()
+
 	return 1
 }
