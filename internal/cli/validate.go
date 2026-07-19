@@ -1,6 +1,10 @@
 package cli
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/james-rocha/verso/internal/project"
+)
 
 type ValidateCommand struct{}
 
@@ -9,6 +13,15 @@ func (ValidateCommand) Name() string {
 }
 
 func (ValidateCommand) Run(args []string) error {
-	fmt.Println("validate not implemented")
+	if len(args) < 1 {
+		return fmt.Errorf("missing project path")
+	}
+
+	if err := project.Validate(args[0]); err != nil {
+		return err
+	}
+
+	fmt.Println("✓ Project is valid")
+
 	return nil
 }
