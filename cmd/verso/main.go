@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"os"
+
+	"github.com/james-rocha/verso/internal/cli"
+)
 
 func main() {
-	fmt.Println("Verso CLI")
+	os.Exit(cli.Run(os.Args))
 }
