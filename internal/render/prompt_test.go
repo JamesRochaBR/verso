@@ -38,3 +38,12 @@ func TestPrompt(t *testing.T) {
 		t.Fatal("missing content")
 	}
 }
+
+// func TestPromptRendererName(t *testing.T) {
+
+// 	r := PromptRenderer{}
+
+// 	if r.Name() != "prompt" {
+// 		t.Fatalf("unexpected renderer name")
+// 	}
+// }

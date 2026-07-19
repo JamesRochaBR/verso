@@ -7,7 +7,6 @@ import (
 )
 
 func Prompt(p *project.Project) string {
-
 	var b strings.Builder
 
 	b.WriteString("# Project\n\n")
@@ -34,11 +33,9 @@ func writeSection(
 	components []project.Component,
 	componentType project.ComponentType,
 ) {
-
 	first := true
 
 	for _, c := range components {
-
 		if c.Type != componentType {
 			continue
 		}
