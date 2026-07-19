@@ -1,1 +1,0 @@
-func Load(path string) (*Project, error)

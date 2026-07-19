@@ -1,4 +1,6 @@
+package project
+
 type Project struct {
-    Metadata Metadata
+    Metadata   Metadata
     Components []Component
 }
