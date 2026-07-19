@@ -46,10 +46,13 @@ func TestSplitCSVEmpty(t *testing.T) {
 
 func TestParsePromptOptions(t *testing.T) {
 
-	opts := ParsePromptOptions([]string{
+	opts, err := ParsePromptOptions([]string{
 		"--name",
 		"reviewer,architect",
 	})
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	if len(opts.Filter.Names) != 2 {
 		t.Fatal("expected two names")
@@ -66,10 +69,13 @@ func TestParsePromptOptions(t *testing.T) {
 
 func TestParsePromptOptionsOutput(t *testing.T) {
 
-	opts := ParsePromptOptions([]string{
+	opts, err := ParsePromptOptions([]string{
 		"--output",
 		"prompt.md",
 	})
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	if opts.Output != "prompt.md" {
 		t.Fatal("unexpected output")
@@ -95,10 +101,13 @@ func TestParseComponentTypes(t *testing.T) {
 
 func TestParsePromptOptionsExclude(t *testing.T) {
 
-	opts := ParsePromptOptions([]string{
+	opts, err := ParsePromptOptions([]string{
 		"--exclude",
 		"memory",
 	})
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	if len(opts.Filter.Exclude) != 1 {
 		t.Fatal("expected one excluded type")
@@ -106,5 +115,25 @@ func TestParsePromptOptionsExclude(t *testing.T) {
 
 	if opts.Filter.Exclude[0] != project.ComponentMemory {
 		t.Fatal("unexpected excluded type")
+	}
+}
+
+func TestParsePromptOptionsUnknownFlag(t *testing.T) {
+	_, err := ParsePromptOptions([]string{
+		"--invalid",
+	})
+
+	if err == nil {
+		t.Fatal("expected error")
+	}
+}
+
+func TestParsePromptOptionsMissingValue(t *testing.T) {
+	_, err := ParsePromptOptions([]string{
+		"--name",
+	})
+
+	if err == nil {
+		t.Fatal("expected error")
 	}
 }

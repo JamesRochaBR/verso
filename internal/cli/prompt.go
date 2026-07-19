@@ -24,7 +24,10 @@ func (PromptCommand) Run(args []string) error {
 		return err
 	}
 
-	opts := ParsePromptOptions(args[1:])
+	opts, err := ParsePromptOptions(args[1:])
+	if err != nil {
+		return err
+	}
 
 	p = project.ApplyFilter(p, opts.Filter)
 

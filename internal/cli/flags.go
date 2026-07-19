@@ -1,9 +1,9 @@
 package cli
 
 import (
-	"strings"
-
+	"fmt"
 	"github.com/james-rocha/verso/internal/project"
+	"strings"
 )
 
 type PromptOptions struct {
@@ -11,35 +11,43 @@ type PromptOptions struct {
 	Output string
 }
 
-func ParsePromptOptions(args []string) PromptOptions {
+func ParsePromptOptions(args []string) (PromptOptions, error) {
 	var opts PromptOptions
 
 	for i := 0; i < len(args); i++ {
 
 		switch args[i] {
-
 		case "--name":
-			if i+1 < len(args) {
-				opts.Filter.Names = splitCSV(args[i+1])
-				i++
+			if i+1 >= len(args) {
+				return opts, fmt.Errorf("missing value for --name")
 			}
+
+			opts.Filter.Names = splitCSV(args[i+1])
+			i++
 
 		case "--exclude":
-			if i+1 < len(args) {
-				opts.Filter.Exclude = parseComponentTypes(args[i+1])
-				i++
+			if i+1 >= len(args) {
+				return opts, fmt.Errorf("missing value for --exclude")
 			}
 
+			opts.Filter.Exclude = parseComponentTypes(args[i+1])
+			i++
+
 		case "--output":
-			if i+1 < len(args) {
-				opts.Output = args[i+1]
-				i++
+			if i+1 >= len(args) {
+				return opts, fmt.Errorf("missing value for --output")
 			}
+
+			opts.Output = args[i+1]
+			i++
+
+		default:
+			return opts, fmt.Errorf("unknown flag: %s", args[i])
 
 		}
 	}
 
-	return opts
+	return opts, nil
 }
 
 func splitCSV(value string) []string {
