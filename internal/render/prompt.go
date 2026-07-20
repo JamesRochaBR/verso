@@ -1,0 +1,81 @@
+package render
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/james-rocha/verso/internal/project"
+)
+
+type MarkdownRenderer struct{}
+
+func (MarkdownRenderer) Render(p *project.Project) (string, error) {
+	var b strings.Builder
+
+	b.WriteString("# Project\n\n")
+
+	b.WriteString("Name: ")
+	b.WriteString(p.Metadata.Name)
+	b.WriteString("\n")
+
+	b.WriteString("Version: ")
+	b.WriteString(p.Metadata.Version)
+	b.WriteString("\n\n")
+
+	writeSection(&b, "Skills", p.Components, project.ComponentSkill)
+	writeSection(&b, "Memory", p.Components, project.ComponentMemory)
+	writeSection(&b, "Workflows", p.Components, project.ComponentWorkflow)
+	writeSection(&b, "Templates", p.Components, project.ComponentTemplate)
+
+	return b.String(), nil
+}
+
+func writeSection(
+	b *strings.Builder,
+	title string,
+	components []project.Component,
+	componentType project.ComponentType,
+) {
+	first := true
+
+	for _, c := range components {
+		if c.Type != componentType {
+			continue
+		}
+
+		if first {
+			b.WriteString("# ")
+			b.WriteString(title)
+			b.WriteString("\n\n")
+			first = false
+		}
+
+		b.WriteString("## ")
+		b.WriteString(c.Title)
+		b.WriteString("\n\n")
+		b.WriteString(c.Content)
+		b.WriteString("\n\n")
+	}
+}
+
+func (MarkdownRenderer) Name() string {
+	return "markdown"
+}
+
+func Prompt(p *project.Project) (string, error) {
+	r, ok := Get("markdown")
+	if !ok {
+		return "", fmt.Errorf("markdown renderer not registered")
+	}
+
+	out, err := r.Render(p)
+	if err != nil {
+		return "", err
+	}
+
+	return out, nil
+}
+
+func init() {
+	Register(MarkdownRenderer{})
+}

@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "name": "hello-world",
+    "version": "0.1.0",
+    "description": ""
+  },
+  "components": [
+    {
+      "name": "architect",
+      "title": "Software Architect",
+      "type": "skill",
+      "path": "skills/architect.md",
+      "content": "# Software Architect\n\nYou design scalable systems..."
+    },
+    {
+      "name": "reviewer",
+      "title": "Code Reviewer",
+      "type": "skill",
+      "path": "skills/reviewer.md",
+      "content": "# Code Reviewer\n\nYou are a senior software engineer..."
+    },
+    {
+      "name": "project",
+      "title": "Project Memory",
+      "type": "memory",
+      "path": "memory/project.md",
+      "content": "# Project Memory\n\nImportant information about the project."
+    }
+  ]
+}
