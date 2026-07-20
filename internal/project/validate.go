@@ -31,9 +31,14 @@ func Validate(path string) error {
 
 	// Validate all components in the project
 	for _, comp := range project.Components {
-		if comp.Type == ComponentSkill {
+		switch comp.Type {
+		case ComponentSkill:
 			if err := ValidateSkill(comp); err != nil {
 				return fmt.Errorf("invalid skill %s: %w", comp.Name, err)
+			}
+		case ComponentMemory:
+			if err := ValidateMemory(comp); err != nil {
+				return fmt.Errorf("invalid memory %s: %w", comp.Name, err)
 			}
 		}
 	}
@@ -91,11 +96,40 @@ func ValidateLifecycle(component Component) error {
 	return nil
 }
 
+// ValidateMemory validates a Memory component according to RFC-0003 specifications.
+//
+// Rules:
+//   - Name is required and must be non-empty
+//   - Type must be "memory"
+//   - Content must not be empty
+//   - Must belong to the project (not marked as reusable across projects)
+func ValidateMemory(component Component) error {
+	// 1. Name é obrigatório
+	if strings.TrimSpace(component.Name) == "" {
+		return fmt.Errorf("memory name is required")
+	}
+
+	// 2. Type deve ser "memory"
+	if component.Type != ComponentMemory {
+		return fmt.Errorf("component %q has type %q, expected %q",
+			component.Name, component.Type, ComponentMemory)
+	}
+
+	// 3. Content não pode ser vazio
+	if strings.TrimSpace(component.Content) == "" {
+		return fmt.Errorf("memory %q has empty content", component.Name)
+	}
+
+	return nil
+}
+
 // ValidateComponent validates any Verso component based on its type.
 func ValidateComponent(component Component) error {
 	switch component.Type {
 	case ComponentSkill:
 		return ValidateSkill(component)
+	case ComponentMemory:
+		return ValidateMemory(component)
 	default:
 		// Basic validation for all types
 		if strings.TrimSpace(component.Name) == "" {

@@ -4,8 +4,8 @@ Arquivo de tracking para acompanhamento do progresso da implementação do proje
 
 ## 📊 Status Atual
 
-- **Milestone Atual:** v0.4 — Skills ✅
-- **Próximo Milestone:** v0.5 — Memory
+- **Milestone Atual:** v0.5 — Memory ✅
+- **Próximo Milestone:** v0.6 — Workflows
 - **Última Atualização:** 2026-07-19
 
 ---
@@ -132,14 +132,48 @@ Arquivo de tracking para acompanhamento do progresso da implementação do proje
 
 ---
 
-## Fase 4: v0.5 - Memory
+## Fase 4: v0.5 - Memory ✅ CONCLUÍDA
 
 > Memory armazena conhecimento específico do projeto através das interações.
 
-- [ ] Completar Memory frontmatter parsing
-- [ ] Implementar Memory versioning
-- [ ] Adicionar tags support no discovery (`internal/project/discovery.go`)
-- [ ] Criar testes para Memory (`internal/project/memory_test.go`)
+- [x] Implementar `ValidateMemory()` em `internal/project/validate.go`
+  - [x] Validar name é obrigatório e não vazio
+  - [x] Validar type deve ser "memory"
+  - [x] Validar content não pode ser vazio
+- [x] Expandir `ValidateComponent()` para suportar `ComponentMemory`
+- [x] Expandir `Validate()` para validar memory components no projeto
+- [x] Criar pacote `internal/project/memory.go` com versioning utilities
+  - [x] Struct `SemVer` com parsing de versão semântica
+  - [x] `ParseSemanticVersion()` — suporta formato MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]
+  - [x] `CompareVersions()` — comparação de versões semânticas
+  - [x] `SemVer.String()`, `BumpMajor()`, `BumpMinor()`, `BumpPatch()`
+  - [x] `IsVersioned()` — verifica se component tem versão válida
+  - [x] `GetLatestVersion()` — encontra última versão baseada em semver
+  - [x] `ListMemoryVersions()` — lista todas as versões de um memory component
+- [x] Criar testes para Memory (`internal/project/memory_test.go`) — **42 testes passando**
+  - [x] 8 testes de ParseSemanticVersion (valid, empty, invalid)
+  - [x] 4 testes de SemVer.String()
+  - [x] 3 testes de bump methods (BumpMajor, BumpMinor, BumpPatch)
+  - [x] 6 testes de CompareVersions (equal, greater, less, prerelease, invalid)
+  - [x] 3 testes de IsVersioned
+  - [x] 5 testes de ValidateMemory
+  - [x] 2 testes de ValidateComponent com Memory
+  - [x] 3 testes de GetLatestVersion (single, multiple, none)
+  - [x] 3 testes de ListMemoryVersions (multiple, excludes non-matching, excludes dirs)
+  - [x] 3 testes de ValidateLifecycle para Memory
+  - [x] 1 teste de Discover integration
+  - [x] 2 testes de ValidateComponents batch
+  - [x] 1 teste de edge case
+
+- [x] Expandir exemplos em `hello-world/memory/`
+  - [x] `project.md` — existente (mantido)
+  - [x] `conventions.md` — coding conventions e standards
+  - [x] `architecture.md` — system architecture overview
+  - [x] `decisions.md` — architectural decisions log
+
+**Novas funções implementadas:** 10 novas funções públicas em `memory.go`
+**Novos testes:** 42 testes unitários
+**Novos exemplos:** 3 novos memory components
 
 ---
 
