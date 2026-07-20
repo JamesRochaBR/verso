@@ -4,8 +4,8 @@ Arquivo de tracking para acompanhamento do progresso da implementação do proje
 
 ## 📊 Status Atual
 
-- **Milestone Atual:** v0.3 — Router ✅
-- **Próximo Milestone:** v0.4 — Skills
+- **Milestone Atual:** v0.4 — Skills ✅
+- **Próximo Milestone:** v0.5 — Memory
 - **Última Atualização:** 2026-07-19
 
 ---
@@ -90,15 +90,45 @@ Arquivo de tracking para acompanhamento do progresso da implementação do proje
 
 ---
 
-## Fase 3: v0.4 - Skills
+## Fase 3: v0.4 — Skills ✅ CONCLUÍDA
 
 > Skills são a menor unidade reutilizável de conhecimento dentro do framework.
 
-- [ ] Implementar Skill validation completa (expandir `internal/project/validate.go`)
-- [ ] Adicionar metadata parsing (frontmatter YAML) em `internal/project/markdown.go`
-  - Suportar campos: name, version, author, tags, description
-- [ ] Implementar Skill lifecycle tracking
-- [ ] Criar testes para Skills (`internal/project/skill_test.go`)
+- [x] Adicionar metadata parsing (frontmatter YAML) em `internal/project/markdown.go`
+  - [x] Criar struct `FrontmatterMetadata` com campos: name, type, version, author, tags, description, depends, status
+  - [x] Implementar `ParseFrontmatter()` — extrai e parseia YAML frontmatter
+  - [x] Implementar `ExtractBody()` — retorna markdown sem frontmatter
+  - [x] Atualizar `ExtractTitle()` para pular frontmatter automaticamente
+  - [x] Adicionar utilitários: `lowercaseString()`, `containsString()`, `containsTag()`
+- [x] Expandir Component struct com metadata em `internal/project/component.go`
+  - [x] Adicionar campos: Metadata, Version, Author, Tags, Description, Status
+  - [x] Definir `LifecycleState` e constantes (created, reviewed, approved, deprecated)
+  - [x] Implementar `HasTags()`, `ContainsKeyword()`, `IsDeprecated()`
+- [x] Atualizar Discovery para usar metadata em `internal/project/discovery.go`
+  - [x] Parse frontmatter ao descobrir componentes
+  - [x] Preencher campos do Component com valores do frontmatter
+  - [x] Mapear lifecycle status quando presente
+- [x] Implementar Skill validation completa em `internal/project/validate.go`
+  - [x] `ValidateSkill()` — valida regras do RFC-0002 (name, type, content)
+  - [x] `ValidateLifecycle()` — verifica estado válido de lifecycle
+  - [x] `ValidateComponent()` — validação genérica por tipo
+  - [x] `ValidateComponents()` — validação em lote
+- [x] Criar testes para Skills (`internal/project/skill_test.go`) — **49 testes passando**
+  - [x] 7 testes de ParseFrontmatter (valid, empty, invalid YAML, minimal, tags as list)
+  - [x] 5 testes de ExtractBody/ExtractTitle com frontmatter
+  - [x] 6 testes de ValidateSkill
+  - [x] 4 testes de ValidateLifecycle/LifecycleState
+  - [x] 8 testes de Component helper methods (HasTags, ContainsKeyword, IsDeprecated)
+  - [x] 2 testes de Discover integration (with/without frontmatter)
+  - [x] 5 testes de ValidateComponent/ValidateComponents
+- [x] Atualizar exemplos hello-world com frontmatter
+  - [x] `hello-world/skills/architect.md` — metadata completo com tags e status
+  - [x] `hello-world/skills/reviewer.md` — metadata completo com tags e status
+  - [x] `hello-world/memory/project.md` — metadata para memory component
+
+**Novas dependências:** `gopkg.in/yaml.v3`
+
+**Total de testes no pacote `internal/project`:** 49 testes passando
 
 ---
 
@@ -152,15 +182,95 @@ Arquivo de tracking para acompanhamento do progresso da implementação do proje
 
 ---
 
-## Fase 8: v0.9 - Examples & Validation
+## Fase 8: v0.9 — Examples & Validation
 
 > Exemplos que validam a arquitetura e nunca a definem.
 
-- [ ] Expandir hello-world example
-- [ ] Criar exemplo multi-skill
-- [ ] Criar exemplo com workflow completo
-- [ ] Adicionar validação de projetos exemplo
-- [ ] Documentar examples em `examples/README.md`
+### Objetivo
+
+Criar um conjunto abrangente de skills reutilizáveis que definem comportamentos padrão do agente Verso, organizadas por domínio de competência.
+
+### Skills Planejadas (15 total)
+
+#### 🧪 Testing (2 skills)
+| # | Arquivo | Nome | Descrição | Tags |
+|---|---------|------|-----------|------|
+| 1 | `testing/test-driven-development.md` | TDD Cycle | RED-GREEN-REFACTOR cycle completo, incluindo anti-patterns de testing | `testing`, `tdd`, `red-green-refactor`, `anti-patterns` |
+| 2 | `testing/verification-before-completion.md` | Verification Gate | Garantir que tudo está realmente fixo antes de declarar conclusão | `testing`, `verification`, `quality-gate` |
+
+#### 🐛 Debugging (1 skill)
+| # | Arquivo | Nome | Descrição | Tags |
+|---|---------|------|-----------|------|
+| 3 | `debugging/systematic-debugging.md` | Systematic Debugging | Processo de 4 fases para root cause analysis, incluindo técnicas de root-cause-tracing, defense-in-depth, condition-based-waiting | `debugging`, `root-cause`, `defense-in-depth`, `condition-based-waiting` |
+
+#### 🤝 Collaboration (9 skills)
+| # | Arquivo | Nome | Descrição | Tags |
+|---|---------|------|-----------|------|
+| 4 | `collaboration/brainstorming.md` | Brainstorming | Refinamento de design via perguntas socráticas | `collaboration`, `design`, `socratic-method` |
+| 5 | `collaboration/writing-plans.md` | Writing Plans | Criação de planos de implementação detalhados | `planning`, `documentation`, `architecture` |
+| 6 | `collaboration/executing-plans.md` | Executing Plans | Batch execution com checkpoints | `execution`, `checkpoints`, `workflow` |
+| 7 | `collaboration/dispatching-parallel-agents.md` | Parallel Agents | Workflows concorrentes com subagents | `parallel`, `subagent`, `concurrent` |
+| 8 | `collaboration/requesting-code-review.md` | Request Review | Checklist prévia para solicitar code review | `code-review`, `checklist`, `quality` |
+| 9 | `collaboration/receiving-code-review.md` | Receive Review | Como responder a feedback de forma construtiva | `code-review`, `feedback`, `iteration` |
+| 10 | `collaboration/using-git-worktrees.md` | Git Worktrees | Branches paralelos para desenvolvimento simultâneo | `git`, `worktrees`, `parallel-development` |
+| 11 | `collaboration/finishing-a-development-branch.md` | Finish Branch | Workflow de merge/PR com critério de decisão | `git`, `merge`, `pr`, `workflow` |
+| 12 | `collaboration/subagent-driven-development.md` | Subagent Dev | Iteração rápida com review em duas etapas (spec compliance → code quality) | `subagent`, `two-stage-review`, `iteration` |
+
+#### 🧠 Meta (2 skills)
+| # | Arquivo | Nome | Descrição | Tags |
+|---|---------|------|-----------|------|
+| 13 | `meta/writing-skills.md` | Writing Skills | Criar novas skills seguindo best practices (inclui methodology de testing) | `skills`, `authoring`, `best-practices` |
+| 14 | `meta/using-superpowers.md` | Using Superpowers | Introdução ao sistema de skills do Verso | `onboarding`, `introduction`, `skills-system` |
+
+#### 💡 Philosophy (1 skill)
+| # | Arquivo | Nome | Descrição | Tags |
+|---|---------|------|-----------|------|
+| 15 | `philosophy/core-principles.md` | Core Principles | Test-Driven Development, Systematic over ad-hoc, Complexity reduction, Evidence over claims | `philosophy`, `principles`, `tdd`, `simplicity` |
+
+### Tarefas de Implementação
+
+- [ ] Criar estrutura de diretórios para skills
+  - `testing/` — Skills de testing e verificação
+  - `debugging/` — Skills de debugging sistemático
+  - `collaboration/` — Skills de colaboração e trabalho em equipe
+  - `meta/` — Skills sobre o próprio sistema Verso
+  - `philosophy/` — Princípios fundamentais
+
+- [ ] Implementar Testing skills (2 arquivos)
+  - [x] `testing/test-driven-development.md` — TDD RED-GREEN-REFACTOR cycle
+  - [x] `testing/verification-before-completion.md` — Verification gate
+
+- [ ] Implementar Debugging skills (1 arquivo)
+  - [x] `debugging/systematic-debugging.md` — 4-phase root cause process
+
+- [ ] Implementar Collaboration skills (9 arquivos)
+  - [x] `collaboration/brainstorming.md` — Socratic design refinement
+  - [x] `collaboration/writing-plans.md` — Detailed implementation plans
+  - [x] `collaboration/executing-plans.md` — Batch execution with checkpoints
+  - [x] `collaboration/dispatching-parallel-agents.md` — Concurrent subagent workflows
+  - [x] `collaboration/requesting-code-review.md` — Pre-review checklist
+  - [x] `collaboration/receiving-code-review.md` — Responding to feedback
+  - [x] `collaboration/using-git-worktrees.md` — Parallel development branches
+  - [x] `collaboration/finishing-a-development-branch.md` — Merge/PR decision workflow
+  - [x] `collaboration/subagent-driven-development.md` — Two-stage review
+
+- [ ] Implementar Meta skills (2 arquivos)
+  - [x] `meta/writing-skills.md` — Create new skills following best practices
+  - [x] `meta/using-superpowers.md` — Introduction to the skills system
+
+- [ ] Implementar Philosophy skill (1 arquivo)
+  - [x] `philosophy/core-principles.md` — Core principles do Verso
+
+- [ ] Criar workflow de exemplo multi-skill
+  - [ ] `hello-world/workflows/tdd-cycle.md` — Orquestra: philosophy → testing → debugging → code-review
+
+- [ ] Atualizar validação de projetos exemplo
+  - Verificar se todas as skills têm frontmatter válido
+  - Validar unicidade de nomes dentro do projeto
+  - Garantir consistência de tags
+
+**Total de novas skills:** 15
+**Novos diretórios:** 5 (testing, debugging, collaboration, meta, philosophy)
 
 ---
 
