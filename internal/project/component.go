@@ -7,6 +7,8 @@ const (
 	ComponentMemory   ComponentType = "memory"
 	ComponentWorkflow ComponentType = "workflow"
 	ComponentTemplate ComponentType = "template"
+	ComponentRouter   ComponentType = "router"
+	ComponentAgent    ComponentType = "agent"
 )
 
 type Component struct {

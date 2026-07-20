@@ -211,6 +211,88 @@ Implemente ou atualize os testes.
 
 Sugira uma mensagem de commit seguindo Conventional Commits.
 
+### Fluxo de Trabalho Open-Source (MIT)
+
+Este projeto é open-source com licença MIT. Cada implementação deve seguir o padrão de versionamento e commits documentado abaixo.
+
+#### Commits por Feature/Bugfix
+
+Cada unidade lógica de trabalho deve produzir um commit separado.
+
+**Tipos de commit (Conventional Commits):**
+
+| Type | Descrição |
+|------|-----------|
+| `feat` | Nova funcionalidade |
+| `fix` | Correção de bug |
+| `docs` | Alteração em documentação |
+| `test` | Adição/modificação de testes |
+| `refactor` | Refatoração de código |
+| `chore` | Alterações de build/configuração |
+
+**Formato da mensagem:**
+
+```
+type: descrição concisa
+
+Opcional: corpo explicativo e referência a RFC/issue
+```
+
+**Exemplos:**
+
+```
+feat(router): add keyword-based routing strategy
+feat(router): implement workflow routing strategy
+docs(rfc): complete RFC-0007 Agent Specification
+test(router): add unit tests (23 tests passing)
+chore: update IMPLEMENTATION_PLAN.md status
+```
+
+#### Tags por Fase Concluída
+
+Após concluir cada fase do IMPLEMENTATION_PLAN.md, crie uma tag semântica.
+
+**Formato:** `v<Major>.<Minor>.<Patch>` seguindo [Semantic Versioning](https://semver.org/)
+
+| Componente | Significado | Quando incrementar |
+|------------|-------------|-------------------|
+| MAJOR | Mudanças incompatíveis | Raramente (release estável) |
+| MINOR | Novas funcionalidades backward-compatible | Ao concluir cada fase principal |
+| PATCH | Correções backward-compatible | Ao corrigir bugs em fases existentes |
+
+**Histórico de tags do projeto:**
+
+| Tag | Significado | Status |
+|-----|-------------|--------|
+| `v0.1.0` | Foundation — Setup inicial | ✅ Criada |
+| `v0.2.0` | Specifications — RFCs + Component Types | 🔄 Próxima tag |
+| `v0.3.0` | Router — Camada de decisão | Planejada |
+| `v0.4.0` | Skills — Unidade reutilizável | Futura |
+| `v1.0.0` | Stable — Production-ready | Futura |
+
+**Comandos para criar e publicar tag:**
+
+```bash
+# Após concluir uma fase
+git add .
+git commit -m "chore: complete v0.2.0 Specifications phase"
+git tag -a v0.2.0 -m "Release v0.2.0 — Specifications (RFCs, Serialization, Discovery)"
+git push origin main
+git push origin v0.2.0
+```
+
+**Regras:**
+
+1. Cada fase concluída gera uma tag MINOR
+2. Correções em fases existentes geram tag PATCH
+3. Nunca apagar ou reescrever tags públicas
+4. Atualizar CHANGELOG.md antes de cada tag
+
+### Tag Atual
+
+- **Tag atual:** `v0.1.0` — Foundation
+- **Próxima tag:** `v0.2.0` — Specifications (após RFCs completas)
+
 ---
 
 # COMUNICAÇÃO

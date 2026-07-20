@@ -7,8 +7,11 @@ import (
 )
 
 type PromptOptions struct {
-	Filter project.Filter
-	Output string
+	Filter   project.Filter
+	Output   string
+	Keywords []string
+	Strategy string
+	Workflow string
 }
 
 func ParsePromptOptions(args []string) (PromptOptions, error) {
@@ -39,6 +42,32 @@ func ParsePromptOptions(args []string) (PromptOptions, error) {
 			}
 
 			opts.Output = args[i+1]
+			i++
+
+		case "--keywords", "-k":
+			if i+1 >= len(args) {
+				return opts, fmt.Errorf("missing value for --keywords")
+			}
+
+			opts.Keywords = splitCSV(args[i+1])
+			opts.Strategy = "keyword"
+			i++
+
+		case "--workflow", "-w":
+			if i+1 >= len(args) {
+				return opts, fmt.Errorf("missing value for --workflow")
+			}
+
+			opts.Workflow = args[i+1]
+			opts.Strategy = "workflow"
+			i++
+
+		case "--strategy", "-s":
+			if i+1 >= len(args) {
+				return opts, fmt.Errorf("missing value for --strategy")
+			}
+
+			opts.Strategy = args[i+1]
 			i++
 
 		default:

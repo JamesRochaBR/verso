@@ -2,9 +2,11 @@ package cli
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/james-rocha/verso/internal/project"
 	"github.com/james-rocha/verso/internal/render"
-	"os"
+	"github.com/james-rocha/verso/internal/router"
 )
 
 type PromptCommand struct{}
@@ -40,7 +42,24 @@ func (PromptCommand) Run(args []string) error {
 		return err
 	}
 
-	p = project.ApplyFilter(p, opts.Filter)
+	// Use Router for intelligent component selection
+	r := router.New()
+
+	routingOpts := router.RoutingOptions{
+		Filter:   opts.Filter,
+		Strategy: opts.Strategy,
+		Keywords: opts.Keywords,
+	}
+
+	if opts.Workflow != "" {
+		routingOpts.Strategy = "workflow"
+		routingOpts.WorkflowName = opts.Workflow
+	}
+
+	p, err = r.Route(p, routingOpts)
+	if err != nil {
+		return err
+	}
 
 	out, err := render.Prompt(p)
 	if err != nil {
@@ -60,8 +79,11 @@ func printPromptHelp() {
   verso prompt <project> [options]
 
 Options:
-  --name <list>      Include only components by name
-  --exclude <list>   Exclude component types
-  --output <file>    Write prompt to file
-  --help             Show this help`)
+  --name <list>          Include only components by name
+  --exclude <list>       Exclude component types
+  --keywords, -k <list>  Filter components by keywords (uses keyword routing)
+  --workflow, -w <name>  Route through a specific workflow (uses workflow routing)
+  --strategy, -s <type>  Routing strategy: "keyword", "workflow", or "default"
+  --output <file>        Write prompt to file
+  --help                 Show this help`)
 }
